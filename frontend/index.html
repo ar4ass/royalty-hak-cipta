@@ -1,0 +1,135 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RoyaltyChain - Manajemen Royalti Musik</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Navigasi -->
+    <header>
+        <div class="logo">
+            Royalty<span>Chain</span>
+        </div>
+
+        <nav>
+            <a href="#dashboard">Dashboard</a>
+            <a href="#registrasi">Registrasi Lagu</a>
+            <a href="#royalti">Manajemen Royalti</a>
+            <a href="#riwayat">Riwayat</a>
+        </nav>
+
+        <button id="connectWallet">Hubungkan Wallet</button>
+    </header>
+
+    <main>
+
+        <!-- Dashboard -->
+        <section id="dashboard">
+            <h1>Dashboard Royalti Hak Cipta</h1>
+            <p>
+                Sistem pengelolaan dan distribusi royalti musik
+                berbasis blockchain.
+            </p>
+
+            <div class="dashboard-cards">
+                <div class="card">
+                    <h3>Total Lagu</h3>
+                    <p id="totalLagu">0</p>
+                </div>
+
+                <div class="card">
+                    <h3>Total Royalti</h3>
+                    <p id="totalRoyalti">0 ETH</p>
+                </div>
+
+                <div class="card">
+                    <h3>Status Blockchain</h3>
+                    <p id="statusBlockchain">Belum Terhubung</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Registrasi Lagu -->
+        <section id="registrasi">
+            <h2>Registrasi Lagu</h2>
+
+            <form id="formRegistrasi">
+
+                <label for="songId">ID Lagu</label>
+                <input
+                    type="text"
+                    id="songId"
+                    placeholder="Contoh: MUS-2026-002"
+                    required
+                >
+
+                <label for="judulLagu">Judul Lagu</label>
+                <input
+                    type="text"
+                    id="judulLagu"
+                    placeholder="Masukkan judul lagu"
+                    required
+                >
+
+                <label for="namaPencipta">Nama Pencipta</label>
+                <input
+                    type="text"
+                    id="namaPencipta"
+                    placeholder="Masukkan nama pencipta"
+                    required
+                >
+
+                <label for="alamatPencipta">Alamat Wallet Pencipta</label>
+                <input
+                    type="text"
+                    id="alamatPencipta"
+                    placeholder="0x..."
+                    required
+                >
+
+                <button type="submit">Daftarkan Lagu</button>
+
+            </form>
+        </section>
+
+        <!-- Manajemen Royalti -->
+        <section id="royalti">
+            <h2>Manajemen Royalti</h2>
+
+            <div class="card">
+                <p>Fitur pengelolaan royalti akan ditampilkan di sini.</p>
+            </div>
+        </section>
+
+        <!-- Riwayat -->
+        <section id="riwayat">
+            <h2>Riwayat Aktivitas</h2>
+
+            <div class="card">
+                <p>Riwayat transaksi blockchain akan ditampilkan di sini.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>RoyaltyChain - Sistem Royalti Hak Cipta Musik</p>
+    </footer>
+
+    <!-- Library Ethers.js -->
+    <script src="https://cdn.jsdelivr.net/npm/ethers@6.13.5/dist/ethers.umd.min.js"></script>
+
+    <!-- Konfigurasi Smart Contract -->
+    <script src="contract.js"></script>
+
+    <!-- Logika Aplikasi -->
+    <script src="app.js"></script>
+
+</body>
+</html>
