@@ -1,135 +1,227 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RoyaltyChain - Manajemen Royalti Musik</title>
-
+ 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+ 
     <link rel="stylesheet" href="style.css">
 </head>
-
+ 
 <body>
-
+ 
     <!-- Navigasi -->
-    <header>
-        <div class="logo">
-            Royalty<span>Chain</span>
-        </div>
-
-        <nav>
+    <header class="topbar">
+        <a class="logo" href="#dashboard" aria-label="RoyaltyChain, ke beranda">
+            <svg class="logo-mark" viewBox="0 0 32 32" aria-hidden="true">
+                <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="2"/>
+                <circle cx="16" cy="16" r="8" fill="none" stroke="currentColor" stroke-width="1" opacity=".5"/>
+                <circle cx="16" cy="16" r="3" fill="var(--brass)"/>
+            </svg>
+            <span>Royalty<b>Chain</b></span>
+        </a>
+ 
+        <nav aria-label="Navigasi utama">
             <a href="#dashboard">Dashboard</a>
             <a href="#registrasi">Registrasi Lagu</a>
             <a href="#royalti">Manajemen Royalti</a>
             <a href="#riwayat">Riwayat</a>
         </nav>
-
-        <button id="connectWallet">Hubungkan Wallet</button>
+ 
+        <button id="connectWallet" class="wallet-btn" type="button">
+            <span class="dot" aria-hidden="true"></span>
+            <span id="walletLabel">Hubungkan Wallet</span>
+        </button>
     </header>
-
+ 
     <main>
-
+ 
         <!-- Dashboard -->
-        <section id="dashboard">
-            <h1>Dashboard Royalti Hak Cipta</h1>
-            <p>
-                Sistem pengelolaan dan distribusi royalti musik
-                berbasis blockchain.
-            </p>
-
-            <div class="dashboard-cards">
-                <div class="card">
-                    <h3>Total Lagu</h3>
-                    <p id="totalLagu">0</p>
-                </div>
-
-                <div class="card">
-                    <h3>Total Royalti</h3>
-                    <p id="totalRoyalti">0 ETH</p>
-                </div>
-
-                <div class="card">
-                    <h3>Status Blockchain</h3>
-                    <p id="statusBlockchain">Belum Terhubung</p>
+        <section id="dashboard" class="hero">
+            <div class="hero-copy">
+                <h1>Setiap putaran lagu tercatat, dan setiap pihak menerima bagiannya.</h1>
+                <p class="lead">
+                    Daftarkan lagu sebagai NFT, tetapkan artis, label, dan platform,
+                    lalu bagikan royalti langsung dari smart contract.
+                </p>
+                <div class="hero-actions">
+                    <a class="btn btn-primary" href="#registrasi">Daftarkan lagu</a>
+                    <a class="btn btn-ghost" href="#royalti">Kelola royalti</a>
                 </div>
             </div>
+ 
+            <!-- Piringan hitam: cincin warna menunjukkan pembagian royalti lagu terpilih -->
+            <figure class="record-wrap">
+                <svg id="recordSvg" class="record" viewBox="0 0 400 400" role="img"
+                     aria-labelledby="recordTitle recordDesc">
+                    <title id="recordTitle">Pembagian royalti lagu terpilih</title>
+                    <desc id="recordDesc">Cincin berwarna pada piringan hitam menunjukkan porsi royalti pencipta, artis, dan label.</desc>
+ 
+                    <g class="record-disc">
+                        <circle cx="200" cy="200" r="190" fill="var(--vinyl)"/>
+                        <circle cx="200" cy="200" r="176" fill="none" stroke="var(--groove)" stroke-width="1"/>
+                        <circle cx="200" cy="200" r="164" fill="none" stroke="var(--groove)" stroke-width="1"/>
+                        <circle cx="200" cy="200" r="152" fill="none" stroke="var(--groove)" stroke-width="1"/>
+                        <circle cx="200" cy="200" r="116" fill="none" stroke="var(--groove)" stroke-width="1"/>
+                        <circle cx="200" cy="200" r="104" fill="none" stroke="var(--groove)" stroke-width="1"/>
+                        <circle cx="200" cy="200" r="92" fill="none" stroke="var(--groove)" stroke-width="1"/>
+ 
+                        <!-- Segmen pembagian royalti (diatur oleh app.js) -->
+                        <g transform="rotate(-90 200 200)" fill="none" stroke-width="14">
+                            <circle id="segPencipta" cx="200" cy="200" r="134" stroke="var(--brass)" stroke-dasharray="0 1000"/>
+                            <circle id="segArtis"    cx="200" cy="200" r="134" stroke="var(--mint)"  stroke-dasharray="0 1000"/>
+                            <circle id="segLabel"    cx="200" cy="200" r="134" stroke="var(--lilac)" stroke-dasharray="0 1000"/>
+                        </g>
+                    </g>
+ 
+                    <circle cx="200" cy="200" r="70" fill="var(--shellac)"/>
+                    <circle cx="200" cy="200" r="70" fill="none" stroke="var(--brass)" stroke-width="1" opacity=".5"/>
+                    <circle cx="200" cy="200" r="5" fill="var(--ink)"/>
+                </svg>
+ 
+                <div class="record-label">
+                    <span id="recordTrack">Belum ada lagu dipilih</span>
+                    <small id="recordStatus">Pilih lagu di Manajemen Royalti</small>
+                </div>
+ 
+                <figcaption class="split-legend">
+                    <span><i class="sw sw-pencipta"></i>Pencipta <b id="legPencipta">-</b></span>
+                    <span><i class="sw sw-artis"></i>Artis <b id="legArtis">-</b></span>
+                    <span><i class="sw sw-label"></i>Label <b id="legLabel">-</b></span>
+                </figcaption>
+            </figure>
         </section>
-
+ 
+        <!-- Ringkasan -->
+        <section class="ledger" aria-label="Ringkasan">
+            <div class="ledger-item">
+                <span class="ledger-label">Total lagu</span>
+                <strong id="totalLagu">0</strong>
+            </div>
+            <div class="ledger-item">
+                <span class="ledger-label">Total royalti</span>
+                <strong id="totalRoyalti">0 ETH</strong>
+            </div>
+            <div class="ledger-item">
+                <span class="ledger-label">Status blockchain</span>
+                <strong id="statusBlockchain" class="is-off">Belum Terhubung</strong>
+            </div>
+            <div class="ledger-item">
+                <span class="ledger-label">Jaringan</span>
+                <strong id="networkName">-</strong>
+            </div>
+        </section>
+ 
         <!-- Registrasi Lagu -->
-        <section id="registrasi">
-            <h2>Registrasi Lagu</h2>
-
-            <form id="formRegistrasi">
-
-                <label for="songId">ID Lagu</label>
-                <input
-                    type="text"
-                    id="songId"
-                    placeholder="Contoh: MUS-2026-002"
-                    required
-                >
-
-                <label for="judulLagu">Judul Lagu</label>
-                <input
-                    type="text"
-                    id="judulLagu"
-                    placeholder="Masukkan judul lagu"
-                    required
-                >
-
-                <label for="namaPencipta">Nama Pencipta</label>
-                <input
-                    type="text"
-                    id="namaPencipta"
-                    placeholder="Masukkan nama pencipta"
-                    required
-                >
-
-                <label for="alamatPencipta">Alamat Wallet Pencipta</label>
-                <input
-                    type="text"
-                    id="alamatPencipta"
-                    placeholder="0x..."
-                    required
-                >
-
-                <button type="submit">Daftarkan Lagu</button>
-
-            </form>
+        <section id="registrasi" class="block">
+            <div class="block-head">
+                <h2>Registrasi Lagu</h2>
+                <p>Setiap lagu yang didaftarkan menjadi satu NFT milik pencipta.</p>
+            </div>
+ 
+            <div class="split">
+                <form id="formRegistrasi" class="panel" novalidate>
+ 
+                    <label for="songId">ID Lagu</label>
+                    <input type="text" id="songId" placeholder="Contoh: MUS-2026-002" autocomplete="off" required>
+ 
+                    <label for="judulLagu">Judul Lagu</label>
+                    <input type="text" id="judulLagu" placeholder="Masukkan judul lagu" autocomplete="off" required>
+ 
+                    <label for="namaPencipta">Nama Pencipta</label>
+                    <input type="text" id="namaPencipta" placeholder="Masukkan nama pencipta" autocomplete="off" required>
+ 
+                    <label for="alamatPencipta">Alamat Wallet Pencipta</label>
+                    <input type="text" id="alamatPencipta" class="mono" placeholder="0x..." autocomplete="off" spellcheck="false" required>
+                    <button type="button" id="useMyWallet" class="link-btn">Gunakan wallet saya</button>
+ 
+                    <button type="submit" class="btn btn-primary btn-block" id="btnRegistrasi">Daftarkan Lagu</button>
+                </form>
+ 
+                <ol class="lifecycle" aria-label="Alur satu lagu">
+                    <li>
+                        <b>Daftarkan lagu</b>
+                        <span>Pencipta mencatat lagu dan menerima NFT sebagai bukti kepemilikan.</span>
+                    </li>
+                    <li>
+                        <b>Tetapkan pihak terkait</b>
+                        <span>Artis, label, dan platform ditambahkan ke lagu.</span>
+                    </li>
+                    <li>
+                        <b>Aktifkan streaming</b>
+                        <span>Lagu mulai dapat menerima royalti.</span>
+                    </li>
+                    <li>
+                        <b>Masukkan royalti</b>
+                        <span>Dana ETH disetor ke saldo royalti lagu.</span>
+                    </li>
+                    <li>
+                        <b>Distribusikan dana</b>
+                        <span>Kontrak membagi saldo ke pencipta, artis, dan label.</span>
+                    </li>
+                </ol>
+            </div>
         </section>
-
+ 
         <!-- Manajemen Royalti -->
-        <section id="royalti">
-            <h2>Manajemen Royalti</h2>
-
-            <div class="card">
-                <p>Fitur pengelolaan royalti akan ditampilkan di sini.</p>
+        <section id="royalti" class="block">
+            <div class="block-head">
+                <h2>Manajemen Royalti</h2>
+                <p>Pilih lagu, lalu atur pihak terkait, setor royalti, dan distribusikan.</p>
+                <button type="button" id="btnRefresh" class="btn btn-ghost btn-sm">Muat ulang</button>
+            </div>
+ 
+            <div class="manage">
+                <aside class="track-list panel" aria-label="Daftar lagu">
+                    <ul id="trackList">
+                        <li class="empty">
+                            Hubungkan wallet untuk melihat lagu yang sudah terdaftar.
+                        </li>
+                    </ul>
+                </aside>
+ 
+                <div id="trackDetail" class="track-detail panel">
+                    <div class="empty">
+                        Pilih satu lagu dari daftar untuk mengelola royaltinya.
+                    </div>
+                </div>
             </div>
         </section>
-
+ 
         <!-- Riwayat -->
-        <section id="riwayat">
-            <h2>Riwayat Aktivitas</h2>
-
-            <div class="card">
-                <p>Riwayat transaksi blockchain akan ditampilkan di sini.</p>
+        <section id="riwayat" class="block">
+            <div class="block-head">
+                <h2>Riwayat Aktivitas</h2>
+                <p id="historySubtitle">Semua aktivitas tercatat permanen di blockchain.</p>
+            </div>
+ 
+            <div class="panel">
+                <ol id="historyList" class="timeline">
+                    <li class="empty">Pilih lagu untuk melihat riwayat transaksinya.</li>
+                </ol>
             </div>
         </section>
-
+ 
     </main>
-
+ 
     <footer>
         <p>RoyaltyChain - Sistem Royalti Hak Cipta Musik</p>
     </footer>
-
+ 
+    <div id="toasts" class="toasts" role="status" aria-live="polite"></div>
+ 
     <!-- Library Ethers.js -->
     <script src="https://cdn.jsdelivr.net/npm/ethers@6.13.5/dist/ethers.umd.min.js"></script>
-
+ 
     <!-- Konfigurasi Smart Contract -->
     <script src="contract.js"></script>
-
+ 
     <!-- Logika Aplikasi -->
     <script src="app.js"></script>
-
+ 
 </body>
 </html>
